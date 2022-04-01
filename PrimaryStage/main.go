@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	fmt.Println(strings.ContainsRune("!.,", '!'))
+	fmt.Println("5555")
 }
 
 // 存在重复元素Ⅱ
@@ -84,4 +84,18 @@ func reverseOnlyLetters(s string) string {
 		right--
 	}
 	return string(ans)
+}
+
+// 斐波那契数列
+func fib(n int) int {
+	if n < 2 {
+		return n
+	}
+	p, q, r := 0, 0, 1
+	for i := 2; i <= n; i++ {
+		p = q
+		q = r
+		r = p + q
+	}
+	return r
 }
