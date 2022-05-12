@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"math"
+	"math/bits"
+	"sort"
 	"strings"
 	"unicode"
 )
@@ -98,4 +100,128 @@ func fib(n int) int {
 		r = p + q
 	}
 	return r
+}
+
+// 寻找比目标字母大的最小字母,sort.Search:一般用于从一个已经排序的数组中找到某个值所对应的索引
+func nextGreatestLetter(letters []byte, target byte) byte {
+	return letters[sort.Search(len(letters), func(i int) bool {
+		return letters[i] > target
+	})%len(letters)]
+}
+
+//二进制表示中质数个计算置位
+func countPrimeSetBits(left, right int) (ans int) {
+	for x := left; x <= right; x++ {
+		if isPrime(bits.OnesCount(uint(x))) {
+			ans++
+		}
+	}
+	return ans
+}
+func isPrime(x int) bool {
+	if x < 2 {
+		return false
+	}
+	for i := 2; i*i <= x; i++ {
+		if x%i == 0 {
+			return false
+		}
+	}
+	return true
+}
+
+//单词规律
+func wordPattern(pattern string, s string) bool {
+	word2ch := map[string]byte{}
+	ch2word := map[byte]string{}
+	words := strings.Split(s, " ")
+	if len(pattern) != len(words) {
+		return false
+	}
+	for i, word := range words {
+		ch := pattern[i]
+		if word2ch[word] > 0 && word2ch[word] != ch || ch2word[ch] != "" && ch2word[ch] != word {
+			return false
+		}
+		word2ch[word] = ch
+		ch2word[ch] = word
+	}
+	return true
+}
+
+// 分糖果
+func distributeCandies(candyType []int) int {
+	set := map[int]struct{}{}
+	for _, t := range candyType {
+		set[t] = struct{}{}
+	}
+	ans := len(candyType) / 2
+	if len(set) < ans {
+		ans = len(set)
+	}
+	return ans
+}
+
+// 最富有客户的资产总量
+func maximumWealth(accounts [][]int) (ans int) {
+	for _, account := range accounts {
+		sum := 0
+		for _, val := range account {
+			sum += val
+		}
+		if sum > ans {
+			ans = sum
+		}
+	}
+	return ans
+}
+
+// 只出现一次的数字
+// x & (-x) 可以获得ax最低的非0位
+// nums 中的所有元素分成两类.其中一类包含所有二进制表示的第 ll 位为 00 的数，另一类包含所有二进制表示的第 ll 位为 11 的数
+func singleNumber(nums []int) []int {
+	xorSum := 0
+	for _, num := range nums {
+		xorSum ^= num
+	}
+	mask := xorSum & (-xorSum)
+	type1, type2 := 0, 0
+	for _, num := range nums {
+		if num&mask > 0 {
+			type1 ^= num
+		} else {
+			type2 ^= num
+		}
+	}
+	return []int{type1, type2}
+}
+
+// 最小差值
+func smallestRangeI(nums []int, k int) int {
+	minNum, maxNum := nums[0], nums[0]
+	for _, num := range nums[1:] {
+		if num < minNum {
+			minNum = num
+		} else if num > maxNum {
+			maxNum = num
+		}
+	}
+	ans := maxNum - minNum - 2*k
+	if ans > 0 {
+		return ans
+	}
+	return 0
+}
+
+// 删列造序
+func minDeletionSize(strs []string) (ans int) {
+	for j := range strs[0] {
+		for i := 1; i < len(strs); i++ {
+			if strs[i-1][j] > strs[i][j] {
+				ans++
+				break
+			}
+		}
+	}
+	return ans
 }
