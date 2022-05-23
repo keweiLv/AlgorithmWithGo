@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	fmt.Println(strings.ContainsRune("!.,", '!'))
+	fmt.Println(4 >> 1)
 }
 
 // 存在重复元素Ⅱ
@@ -109,4 +109,37 @@ func calPoints(ops []string) (ans int) {
 		}
 	}
 	return
+}
+
+// 增键字符串匹配
+func diStringMatch(s string) []int {
+	n := len(s)
+	perm := make([]int, n+1)
+	low, hign := 0, n
+	for i, ch := range s {
+		if ch == 'I' {
+			perm[i] = low
+			low++
+		} else {
+			perm[i] = hign
+			hign--
+		}
+	}
+	perm[n] = low
+	return perm
+}
+
+// 搜索插入位置
+func searchInsert(nums []int, target int) int {
+	len := len(nums)
+	left, right := 0, len
+	for left < right {
+		mid := (right-left)>>1 + len
+		if target < nums[mid] {
+			right = mid - 1
+		} else {
+			left = mid + 1
+		}
+	}
+	return left
 }
