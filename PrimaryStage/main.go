@@ -287,16 +287,16 @@ func searchInsert(nums []int, target int) int {
 // 有效的回文
 func isPalindrome(s string) bool {
 	s = strings.ToLower(s)
-	left,right := 0,len(s)-1
-	for left < right{
-		for left < right && !isAlnum(s[left]){
+	left, right := 0, len(s)-1
+	for left < right {
+		for left < right && !isAlnum(s[left]) {
 			left++
 		}
-		for left < right && !isAlnum(s[right]){
+		for left < right && !isAlnum(s[right]) {
 			right--
 		}
-		if left < right{
-			if s[left] != s[right]{
+		if left < right {
+			if s[left] != s[right] {
 				return false
 			}
 			left++
@@ -306,5 +306,21 @@ func isPalindrome(s string) bool {
 	return true
 }
 func isAlnum(ch byte) bool {
-	return (ch  >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z') || (ch >= '0' && ch <= '9')
+	return (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z') || (ch >= '0' && ch <= '9')
+}
+
+// 数组序号转换
+func arrayRankTransform(arr []int) []int {
+	copy := append([]int{}, arr...)
+	sort.Ints(copy)
+	ranks := map[int]int{}
+	for _, v := range copy {
+		if _, ok := ranks[v]; !ok {
+			ranks[v] = len(ranks) + 1
+		}
+	}
+	for i, v := range arr {
+		arr[i] = ranks[v]
+	}
+	return arr
 }
