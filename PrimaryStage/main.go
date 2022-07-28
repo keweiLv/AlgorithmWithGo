@@ -5,12 +5,13 @@ import (
 	"math"
 	"math/bits"
 	"sort"
+	"strconv"
 	"strings"
 	"unicode"
 )
 
 func main() {
-	fmt.Println("5555")
+	fmt.Println(isPalindrome("A man, a plan, a canal: Panama"))
 }
 
 // 存在重复元素Ⅱ
@@ -224,4 +225,86 @@ func minDeletionSize(strs []string) (ans int) {
 		}
 	}
 	return ans
+}
+
+//leetcode-682 棒球比赛
+func calPoints(ops []string) (ans int) {
+	points := []int{}
+	for _, op := range ops {
+		n := len(points)
+		switch op[0] {
+		case '+':
+			ans += points[n-1] + points[n-2]
+			points = append(points, points[n-1]+points[n-2])
+		case 'D':
+			ans += points[n-2] * 2
+			points = append(points, 2*points[n-2])
+		case 'C':
+			ans -= points[n-1]
+			points = points[:len(points)-1]
+		default:
+			pt, _ := strconv.Atoi(op)
+			ans += pt
+			points = append(points, pt)
+		}
+	}
+	return
+}
+
+// 增键字符串匹配
+func diStringMatch(s string) []int {
+	n := len(s)
+	perm := make([]int, n+1)
+	low, hign := 0, n
+	for i, ch := range s {
+		if ch == 'I' {
+			perm[i] = low
+			low++
+		} else {
+			perm[i] = hign
+			hign--
+		}
+	}
+	perm[n] = low
+	return perm
+}
+
+// 搜索插入位置
+func searchInsert(nums []int, target int) int {
+	len := len(nums)
+	left, right := 0, len
+	for left < right {
+		mid := (right-left)>>1 + len
+		if target < nums[mid] {
+			right = mid - 1
+		} else {
+			left = mid + 1
+		}
+	}
+	return left
+}
+
+// 有效的回文
+func isPalindrome(s string) bool {
+	s = strings.ToLower(s)
+	left,right := 0,len(s)-1
+	for left < right{
+		for left < right && !isAlnum(s[left]){
+			left++
+		}
+		for left < right && !isAlnum(s[right]){
+			right--
+		}
+		if left < right{
+			if s[left] != s[right]{
+				return false
+			}
+			left++
+			right--
+		}
+	}
+	return true
+}
+func isAlnum(ch byte) bool {
+	return (ch  >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z') || (ch >= '0' && ch <= '9')
 }
