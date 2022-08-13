@@ -110,7 +110,7 @@ func nextGreatestLetter(letters []byte, target byte) byte {
 	})%len(letters)]
 }
 
-//二进制表示中质数个计算置位
+// 二进制表示中质数个计算置位
 func countPrimeSetBits(left, right int) (ans int) {
 	for x := left; x <= right; x++ {
 		if isPrime(bits.OnesCount(uint(x))) {
@@ -131,7 +131,7 @@ func isPrime(x int) bool {
 	return true
 }
 
-//单词规律
+// 单词规律
 func wordPattern(pattern string, s string) bool {
 	word2ch := map[string]byte{}
 	ch2word := map[byte]string{}
@@ -227,7 +227,7 @@ func minDeletionSize(strs []string) (ans int) {
 	return ans
 }
 
-//leetcode-682 棒球比赛
+// leetcode-682 棒球比赛
 func calPoints(ops []string) (ans int) {
 	points := []int{}
 	for _, op := range ops {
@@ -323,4 +323,18 @@ func arrayRankTransform(arr []int) []int {
 		arr[i] = ranks[v]
 	}
 	return arr
+}
+
+// 买卖股票的最佳时机
+func maxProfit(prices []int) int {
+	minValue := math.MaxInt64
+	maxValue := 0
+	for i := 0; i < len(prices); i++ {
+		if prices[i] < minValue {
+			minValue = prices[i]
+		} else if prices[i]-minValue > maxValue {
+			maxValue = prices[i] - minValue
+		}
+	}
+	return maxValue
 }
