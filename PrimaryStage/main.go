@@ -338,3 +338,16 @@ func maxProfit(prices []int) int {
 	}
 	return maxValue
 }
+
+// 数组中两元素的最大乘积
+func maxProduct(nums []int) int {
+	p, q := 0, 0
+	for _, num := range nums {
+		if num > q {
+			p, q = q, num
+		} else if num > p {
+			p = num
+		}
+	}
+	return (p - 1) * (q - 1)
+}
