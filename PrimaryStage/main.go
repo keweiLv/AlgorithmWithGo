@@ -365,3 +365,44 @@ func arraySign(nums []int) int {
 	}
 	return ans
 }
+
+// 至少在两个数组中出现的值
+func twoOutOfThree(nums1, nums2, nums3 []int) (ans []int) {
+	mask := map[int]int{}
+	for i, nums := range [][]int{nums1, nums2, nums3} {
+		for _, x := range nums {
+			mask[x] |= 1 << i
+		}
+	}
+	for x, m := range mask {
+		if m&(m-1) > 0 {
+			ans = append(ans, x)
+		}
+	}
+	return
+}
+
+// 按摩师
+func massage(nums []int) int {
+	l := len(nums)
+	if l == 0 {
+		return 0
+	}
+	if l == 1 {
+		return nums[0]
+	}
+	dp := make([]int, 2)
+	dp[0] = nums[0]
+	dp[1] = Max(nums[0], nums[1])
+	for i := 2; i < l; i++ {
+		dp[i%2] = Max(dp[(i-1)%2], dp[(i-2)%2]+nums[i])
+	}
+	return dp[(l-1)%2]
+}
+
+func Max(i int, i2 int) int {
+	if i > i2 {
+		return i
+	}
+	return i2
+}
