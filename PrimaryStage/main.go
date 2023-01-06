@@ -407,7 +407,7 @@ func Max(i int, i2 int) int {
 	return i2
 }
 
-//检查句子中的数字是否递增
+// 检查句子中的数字是否递增
 func areNumbersAscending(s string) bool {
 	pre := 0
 	for _, t := range strings.Split(s, " ") {
@@ -420,4 +420,18 @@ func areNumbersAscending(s string) bool {
 		}
 	}
 	return true
+}
+
+// 统计各数字之和为偶数的整数个数
+func countEven(num int) (ans int) {
+	for i := 1; i <= num; i++ {
+		s := 0
+		for x := i; x > 0; x /= 10 {
+			s += x % 10
+		}
+		if s%2 == 0 {
+			ans++
+		}
+	}
+	return
 }
