@@ -445,3 +445,24 @@ func prefixCount(words []string, pref string) (ans int) {
 	}
 	return
 }
+
+// 易混淆数
+func confusingNumber(n int) bool {
+	m := map[int]int{
+		0: 0,
+		1: 1,
+		6: 9,
+		8: 8,
+		9: 6,
+	}
+	origin := n
+	reverse := 0
+	for n > 0 {
+		if _, ok := m[n%10]; !ok {
+			return false
+		}
+		reverse = reverse*10 + m[n%10]
+		n /= 10
+	}
+	return origin != reverse
+}
