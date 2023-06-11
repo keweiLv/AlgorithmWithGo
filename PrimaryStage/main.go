@@ -488,3 +488,13 @@ func miceAndCheese(reward1 []int, reward2 []int, k int) (ans int) {
 	}
 	return
 }
+
+// 有序数组的平方
+func sortedSquares(nums []int) []int {
+	ans := make([]int, len(nums))
+	for i, v := range nums {
+		ans[i] = v * v
+	}
+	sort.Ints(ans)
+	return ans
+}
