@@ -1,3 +1,3 @@
-module github.com/keweiLv/AlgorithmWithGo
+module github.com/keweiLv/algorithmWithGo
 
 go 1.17

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"math"
 	"math/bits"
 	"sort"
@@ -497,4 +498,16 @@ func sortedSquares(nums []int) []int {
 	}
 	sort.Ints(ans)
 	return ans
+}
+
+func main() {
+	c := make([]int, 0, 1)
+	c = append(c, 1, 2, 3, 4)
+	fmt.Println(cap(c))
+	fmt.Println(c)
+
+	b := make([]int, 0, 1)
+	b = append(b, 1, 2, 3, 4, 5)
+	fmt.Println(cap(b))
+	fmt.Println(b)
 }
